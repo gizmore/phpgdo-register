@@ -47,7 +47,7 @@ class Module_Register extends GDO_Module
 	##############
 	### Module ###
 	##############
-	public function getDependencies() : array { return ['Cronjob']; }
+	public function getFriendencies() : array { return ['Cronjob', 'Mail']; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/register'); }
 	public function href_administrate_module() { return href('Register', 'Admin'); }
 
@@ -130,7 +130,7 @@ class Module_Register extends GDO_Module
 	    {
     	    $tabs = GDT_Bar::make()->horizontal();
     	    $tabs->addField(GDT_Link::make('link_activations')->href(href('Register', 'Activations')));
-    	    GDT_Page::$INSTANCE->topBar()->addField($tabs);
+    	    GDT_Page::$INSTANCE->topResponse()->addField($tabs);
 	    }
 	}
 	

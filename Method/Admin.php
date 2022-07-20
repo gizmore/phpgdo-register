@@ -15,7 +15,7 @@ final class Admin extends Method
 	
 	public function beforeExecute() : void
 	{
-// 	    $this->renderNavBar('Register');
+	    $this->renderAdminBar();
 	    Module_Register::instance()->renderAdminBar();
 	}
 	

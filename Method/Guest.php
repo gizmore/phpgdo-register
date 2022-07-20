@@ -3,12 +3,10 @@ namespace GDO\Register\Method;
 
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\GDT_Hook;
-use GDO\Date\Time;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
 use GDO\Form\MethodForm;
-use GDO\Net\GDT_IP;
 use GDO\Register\Module_Register;
 use GDO\User\GDT_Username;
 use GDO\User\GDO_User;

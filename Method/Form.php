@@ -27,6 +27,7 @@ use GDO\UI\GDT_Panel;
 use GDO\Core\GDT_Response;
 use GDO\UI\GDT_Message;
 use GDO\Register\GDO_UserSignup;
+use GDO\User\GDO_UserSetting;
 
 /**
  * Registration form.
@@ -122,7 +123,7 @@ class Form extends MethodForm
 
 	public function validateUniqueEmail(GDT_Form $form, GDT_Email $email, $value)
 	{
-		$count = GDO_User::table()->countWhere("user_email=".GDO::quoteS($email->getVar()));
+		$count = GDO_UserSetting::table()->countWhere("uset_name='email' AND uset_value=".GDO::quoteS($email->getVar()));
 		return $count == 0 ? true : $email->error('err_email_taken');
 	}
 	
