@@ -168,51 +168,6 @@ class Form extends MethodForm
 		}
 	}
 	
-// 	########################
-// 	### Admin Activation ###
-// 	########################
-// 	public function onAdminActivation(GDO_UserActivation $activation)
-// 	{
-// 	    GDT_Hook::callHook('OnAdminActivation', $activation);
-// 	    $this->onEmailAdminsActivation($activation);
-// 	    $this->onEmailUserAdminActivation($activation);
-// 	    return $this->message('msg_admin_will_activate_you');
-// 	}
-	
-// 	public function onEmailUserAdminActivation(GDO_UserActivation $activation)
-// 	{
-// 	    $mail = Mail::botMail();
-// 	    $mail->setReceiver($activation->getEmail());
-// 	    $mail->setReceiverName($activation->getUsername());
-// 	    $mail->setSubject(t('mail_subj_user_admin_activation'));
-// 	    $args = [
-// 	    ];
-// 	    $mail->setBody(t('mail_body_user_admin_activation', $args));
-// 	    $mail->sendAsHTML();
-	    
-// 	}
-	
-	
-// 	public function onEmailAdminsActivation(GDO_UserActivation $activation)
-// 	{
-// 	    foreach (GDO_User::staff() as $admin)
-// 	    {
-// 	        $this->onEmailAdminActivation($admin, $activation);
-// 	    }
-// 	}
-	    
-// 	public function onEmailAdminActivation(GDO_User $user, GDO_UserActivation $activation)
-// 	{
-// 	    $mail = Mail::botMail();
-// 	    $mail->setSubject(tusr($user, 'mail_subj_admin_activation'));
-// 	    $args = [
-	        
-// 	    ];
-// 	    $mail->setBody(tusr($user, 'mail_body_admin_activation', $args));
-// 	    $mail->sendToUser($user);
-// 	}
-	
-	
 	########################
 	### Email Activation ###
 	########################
