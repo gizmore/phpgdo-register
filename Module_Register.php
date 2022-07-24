@@ -49,7 +49,7 @@ class Module_Register extends GDO_Module
 	##############
 	public function getFriendencies() : array { return ['Cronjob', 'Mail']; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/register'); }
-	public function href_administrate_module() { return href('Register', 'Admin'); }
+	public function href_administrate_module() : ?string { return href('Register', 'Admin'); }
 
 	public function getClasses() : array
 	{

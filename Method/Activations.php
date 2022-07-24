@@ -2,6 +2,7 @@
 namespace GDO\Register\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDO;
 use GDO\Register\GDO_UserActivation;
 use GDO\Table\MethodQueryTable;
 use GDO\UI\GDT_Button;
@@ -23,7 +24,7 @@ final class Activations extends MethodQueryTable
 	    Module_Register::instance()->renderAdminBar();
 	}
 	
-	public function gdoTable()
+	public function gdoTable() : GDO
 	{
 	    return GDO_UserActivation::table();
 	}

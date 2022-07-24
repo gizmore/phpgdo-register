@@ -18,7 +18,7 @@ return [
 	#############################################################################
 	'btn_register' => 'Sign up',
 	'btn_guest' => 'As Guest',
-	'ft_register_form' => 'Sign up',
+	'mt_register_form' => 'Sign up',
 	'password_retype' => 'Retype Password',
 	'tos_label' => 'I have read and agree to the <a href="%s">Terms of Service</a> and the <a href="%s">privacy implications</a>.',
 	'msg_activation_mail_sent' => 'We have sent you an email. To complete your sign up process please follow the instructions there.',
@@ -32,7 +32,7 @@ return [
 	'err_tos_not_checked' => 'You have to accept the terms of service to sign up.',
 	'err_password_retype' => 'You have to retype your password correctly.',
 	#############################################################################
-	'ft_register_guest' => 'Continue as Guest',
+	'mt_register_guest' => 'Continue as Guest',
 	'btn_signup_guest' => 'Use nickname',
 	'err_guest_name_taken' => 'This guest name has been taken already.',
 	'msg_registered_as_guest' => 'You are now using the site as %s.',
@@ -42,9 +42,9 @@ return [
 	#############################################################################
 	'mail_activate_subj' => '%s: Activate your account',
 	#############################################################################
-	'mdescr_register_form' => 'Register',
-	'mdescr_register_guest' => 'Register as guest',
-	'mdescr_register_tos' => 'Terms of service',
+	'md_register_form' => 'Register',
+	'md_register_guest' => 'Register as guest',
+	'md_register_tos' => 'Terms of service',
 	#############################################################################
 	'moderation_info' => 'The signup process is currently requiering an adminstrator to unlock accounts. Please be patient.',
 	'msg_registration_confirmed_but_moderation' => 'You have confirmed your email and now have to wait until an administrator activates you.',

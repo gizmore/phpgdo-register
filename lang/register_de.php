@@ -18,7 +18,7 @@ return [
 	#############################################################################
 	'btn_register' => 'Registrieren',
 	'btn_guest' => 'Weiter als Gast',
-	'ft_register_form' => 'Registrierung',
+	'mt_register_form' => 'Registrierung',
 	'password_retype' => 'Erneut eingeben',
 	'tos_label' => 'Ich habe die <a href="%s">Nutzungsbedingungen</a> und <a href="%s">Datenschutzbestimmungen</a> gelesen.',
 	'msg_activation_mail_sent' => 'Wir haben Dir eine E-Mail gesendet. Folge dem Aktivierungslink dort um die registrierung abzuschliessen.',
@@ -32,7 +32,7 @@ return [
 	'err_tos_not_checked' => 'Sie müssen den Nutzungsbedingungen zustimmen um fortzufahren.',
 	'err_password_retype' => 'Sie müssen zweimal das gleiche Passwort eingeben.',
 	#############################################################################
-	'ft_register_guest' => 'Als Gast fortfahren.',
+	'mt_register_guest' => 'Als Gast fortfahren.',
 	'btn_signup_guest' => 'Nickname verwenden',
 	'err_guest_name_taken' => 'Dieser Nickname ist bereits in Benutzung',
 	'msg_registered_as_guest' => 'Du bist nun als %s angemeldet.',
@@ -42,9 +42,9 @@ return [
 	#############################################################################
 	'mail_activate_subj'=> '[%s] Activieren Sie Ihr Konto',
 	#############################################################################
-	'mdescr_register_form' => 'Registrieren',
-	'mdescr_register_guest' => 'Als Gast anmelden',
-	'mdescr_register_tos' => 'Nutzungsbedingungen',
+	'md_register_form' => 'Registrieren',
+	'md_register_guest' => 'Als Gast anmelden',
+	'md_register_tos' => 'Nutzungsbedingungen',
 	#############################################################################
 	'moderation_info' => 'Die Registrierung erfordert zur Zeit die aktivierung durch einen Administrator. Wir bitten um Geduld.',
 	'msg_registration_confirmed_but_moderation' => 'Sie haben Ihre E-Mail bestätigt and warten nun auf eine Aktivierung durch einen Administrator.',

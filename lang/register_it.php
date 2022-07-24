@@ -18,7 +18,7 @@ return [
 	#############################################################################
 	'btn_register' => 'Regitrare',
 	'btn_guest' => 'Procedere come ospite',
-	'ft_register_form' => 'Registrazione',
+	'mt_register_form' => 'Registrazione',
 	'password_retype' => 'Registrare nuovamente',
 	'tos_label' => 'Ho letto le <a href="%s">condizioni</a> e la <a href="%s">norma sul trattamento dei dati personali [JURA]</a>.',
 	'msg_activation_mail_sent' => 'Vi é stata inviata una Mail. Segua il Link di attivazione per concludere la registrazione.',
@@ -32,7 +32,7 @@ return [
 	'err_tos_not_checked' => 'Deve accettare le condizioni per poter procedere',
 	'err_password_retype' => 'Deve inserire due volte la stessa password.',
 	#############################################################################
-	'ft_register_guest' => 'Procedere come ospite.',
+	'mt_register_guest' => 'Procedere come ospite.',
 	'btn_signup_guest' => 'Utilizza Nickname',
 	'err_guest_name_taken' => 'Questo Nickname viene gia utilizzato',
 	'msg_registered_as_guest' => 'Siete registrati come %s.',
@@ -42,9 +42,9 @@ return [
 	#############################################################################
 	'mail_activate_subj' => '[%s] Attivare il conto',
 	#############################################################################
-	'mdescr_register_form' => 'Registrazione',
-	'mdescr_register_guest' => 'Registrati come ospite',
-	'mdescr_register_tos' => 'Termini di servizio',
+	'md_register_form' => 'Registrazione',
+	'md_register_guest' => 'Registrati come ospite',
+	'md_register_tos' => 'Termini di servizio',
 	#############################################################################
 	'moderation_info' => 'La registrazione attualmente richiede l\'attivazione da parte di un amministratore. Chiediamo pazienza.',
 	'msg_registration_confirmed_but_moderation' => 'Hai confermato la tua e-mail e ora stai aspettando l\'attivazione da parte di un amministratore.',
