@@ -16,6 +16,8 @@ use GDO\Form\GDT_Form;
 use GDO\UI\GDT_Button;
 use GDO\Mail\GDT_Email;
 use GDO\Net\GDT_IP;
+use GDO\Date\GDT_DateTime;
+use GDO\Date\Time;
 
 /**
  * Registration module.
@@ -161,7 +163,18 @@ class Module_Register extends GDO_Module
 	
 	public function hookUserActivated(GDO_User $user, GDO_UserActivation $activation=null)
 	{
+		$this->saveUserSetting($user, 'register_date', Time::getDate());
 		GDO_UserSignup::onSignup($user);
+	}
+	
+	################
+	### Settings ###
+	################
+	public function getUserConfig() : array
+	{
+		return [
+			GDT_DateTime::make('register_date'),
+		];
 	}
 	
 }
