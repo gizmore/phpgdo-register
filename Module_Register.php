@@ -18,6 +18,7 @@ use GDO\Mail\GDT_Email;
 use GDO\Net\GDT_IP;
 use GDO\Date\GDT_DateTime;
 use GDO\Date\Time;
+use GDO\User\Module_User;
 
 /**
  * Registration module.
@@ -31,12 +32,12 @@ use GDO\Date\Time;
  * This module features Moderation Activation.
  * This module features Admin Signup Moderation Activation.
  * This module features Terms of Service and Privacy pages.
- * This module features TellUsAboutYou moderation
+ * This module features TellUsAboutYou moderation. It is copied to about_me automagically.
  *
  * @TODO Guest to Member conversion.
  *
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
  * @since 3.0.0
  * 
  * @see Module_ActivationAlert
@@ -163,7 +164,13 @@ class Module_Register extends GDO_Module
 	
 	public function hookUserActivated(GDO_User $user, GDO_UserActivation $activation=null)
 	{
+		$this->saveUserSetting($user, 'register_ip', GDT_IP::$CURRENT);
 		$this->saveUserSetting($user, 'register_date', Time::getDate());
+		if ($activation)
+		{
+			$aboutMe = $activation->getMessage();
+			Module_User::instance()->saveUserSetting($user, 'about_me', $aboutMe);
+		}
 		GDO_UserSignup::onSignup($user);
 	}
 	
@@ -173,6 +180,7 @@ class Module_Register extends GDO_Module
 	public function getUserConfig() : array
 	{
 		return [
+			GDT_IP::make('register_ip')->noacl(),
 			GDT_DateTime::make('register_date'),
 		];
 	}
