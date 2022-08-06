@@ -60,4 +60,5 @@ return [
 	'list_register_activations' => '%s attivazioni in sospeso',
 	#############################################################################
 	'msg_admin_will_activate_you' => 'Un\'e-mail è stata inviata agli amministratori con una copia per te. Non appena sarai stato attivato riceverai un\'altra email.',
+	'register_date' => 'Registriert am',
 ];

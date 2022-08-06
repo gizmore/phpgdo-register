@@ -60,4 +60,5 @@ return [
 	'list_register_activations' => '%s wartende Aktivierungen',
 	#############################################################################
 	'msg_admin_will_activate_you' => 'Eine Email wurde an die Administratoren gesendet, mit einer Kopie für Sie. Sobald Sie aktiviert wurden erhalten Sie eine weiter Email.',
+	'register_date' => 'Registriert am',
 ];
