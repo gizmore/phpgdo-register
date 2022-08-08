@@ -14,19 +14,21 @@ use GDO\User\GDT_Username;
 use GDO\Net\GDT_Url;
 use GDO\UI\GDT_Message;
 use GDO\Date\GDT_Timestamp;
+use GDO\Crypto\BCrypt;
 
 /**
  * User activation table.
  * 
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
+ * @since 3.1.0
  */
 class GDO_UserActivation extends GDO
 {
 	public function gdoCached() : bool { return false; }
 	public function gdoColumns() : array
 	{
-		return array(
+		return [
 			GDT_AutoInc::make('ua_id'),
 			GDT_Token::make('ua_token')->notNull(),
 			GDT_CreatedAt::make('ua_time')->notNull(),
@@ -36,14 +38,13 @@ class GDO_UserActivation extends GDO
 		    GDT_Message::make('ua_message'),
 
 			# We copy these fields to user table
-// 	        GDT_Language::make('user_language')->initial(Trans::$ISO),
 			GDT_Username::make('user_name')->notNull(),
-			GDT_Password::make('user_password')->notNull(),
+			GDT_Password::make('user_password'),
 			GDT_Email::make('user_email'),
 			GDT_IP::make('user_register_ip')->notNull(),
 		    
 		    GDT_Serialize::make('ua_data'),
-		);
+		];
 	}
 	
 	public function getID() : ?string { return $this->gdoVar('ua_id'); }
@@ -62,4 +63,15 @@ class GDO_UserActivation extends GDO
 	
 	public function renderUserName() { return $this->gdoVar('user_name'); }
 	
+	public function getPassword() : string
+	{
+		return $this->gdoVar('user_password');
+	}
+
+	public function getPasswordHash() : string
+	{
+		$bcrypt = BCrypt::create($this->getPassword());
+		return $bcrypt->__toString();
+	}
+
 }

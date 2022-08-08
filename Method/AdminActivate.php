@@ -15,7 +15,7 @@ final class AdminActivate extends Method
 {
     use MethodAdmin;
     
-    public function isTrivial() { return false; }
+    public function isTrivial() : bool { return false; }
     
     public function getPermission() : ?string { return 'staff'; }
     

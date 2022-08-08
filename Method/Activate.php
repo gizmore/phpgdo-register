@@ -108,20 +108,21 @@ class Activate extends Method
 	 */
 	public function activateToken(GDO_UserActivation $activation, $convertGuest=false)
 	{
-	    $activation->markDeleted();
-	    
 	    if ($convertGuest)
 	    {
     	    $user = GDO_User::current();
     	    $user->setVars($activation->getGDOVars());
+    	    $user->setVar('user_password', $activation->getPasswordHash());
 	    }
 	    else
 	    {
 	        $user = GDO_User::blank($activation->getGDOVars());
 	    }
 
-	    $user->setVar('user_type', 'member');
+	    $activation->saveVar('user_password', null);
+	    $activation->markDeleted();
 	    
+	    $user->setVar('user_type', 'member');
 	    $user->save();
 	    
 	    GDT_Hook::callWithIPC('UserActivated', $user, $activation);
