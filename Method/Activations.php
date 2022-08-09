@@ -29,7 +29,7 @@ final class Activations extends MethodQueryTable
 	    return GDO_UserActivation::table();
 	}
 	
-	public function getQuery()
+	public function getQuery() : Query
 	{
 		return GDO_UserActivation::table()->select();
 	}
