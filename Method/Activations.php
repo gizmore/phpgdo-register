@@ -3,6 +3,7 @@ namespace GDO\Register\Method;
 
 use GDO\Admin\MethodAdmin;
 use GDO\Core\GDO;
+use GDO\DB\Query;
 use GDO\Register\GDO_UserActivation;
 use GDO\Table\MethodQueryTable;
 use GDO\UI\GDT_Button;
