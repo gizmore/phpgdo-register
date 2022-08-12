@@ -42,9 +42,9 @@ return [
 	#############################################################################
 	'mail_activate_subj' => '%s: Activate your account',
 	#############################################################################
-	'md_register_form' => 'Register',
-	'md_register_guest' => 'Register as guest',
-	'md_register_tos' => 'Terms of service',
+	'mt_register_form' => 'Register',
+	'mt_register_guest' => 'Register as guest',
+	'mt_register_tos' => 'Terms of service',
 	#############################################################################
 	'moderation_info' => 'The signup process is currently requiering an adminstrator to unlock accounts. Please be patient.',
 	'msg_registration_confirmed_but_moderation' => 'You have confirmed your email and now have to wait until an administrator activates you.',
