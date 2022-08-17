@@ -13,6 +13,11 @@ final class Admin extends Method
 {
 	use MethodAdmin;
 	
+	public function getMethodName() : string
+	{
+		return t('perm_admin');
+	}
+	
 	public function beforeExecute() : void
 	{
 	    $this->renderAdminBar();

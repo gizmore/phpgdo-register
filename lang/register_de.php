@@ -42,9 +42,9 @@ return [
 	#############################################################################
 	'mail_activate_subj'=> '[%s] Activieren Sie Ihr Konto',
 	#############################################################################
-	'md_register_form' => 'Registrieren',
-	'md_register_guest' => 'Als Gast anmelden',
-	'md_register_tos' => 'Nutzungsbedingungen',
+	'mt_register_form' => 'Registrieren',
+	'mt_register_guest' => 'Als Gast anmelden',
+	'mt_register_tos' => 'Nutzungsbedingungen',
 	#############################################################################
 	'moderation_info' => 'Die Registrierung erfordert zur Zeit die aktivierung durch einen Administrator. Wir bitten um Geduld.',
 	'msg_registration_confirmed_but_moderation' => 'Sie haben Ihre E-Mail bestätigt and warten nun auf eine Aktivierung durch einen Administrator.',

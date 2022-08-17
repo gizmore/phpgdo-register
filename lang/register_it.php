@@ -42,9 +42,9 @@ return [
 	#############################################################################
 	'mail_activate_subj' => '[%s] Attivare il conto',
 	#############################################################################
-	'md_register_form' => 'Registrazione',
-	'md_register_guest' => 'Registrati come ospite',
-	'md_register_tos' => 'Termini di servizio',
+	'mt_register_form' => 'Registrazione',
+	'mt_register_guest' => 'Registrati come ospite',
+	'mt_register_tos' => 'Termini di servizio',
 	#############################################################################
 	'moderation_info' => 'La registrazione attualmente richiede l\'attivazione da parte di un amministratore. Chiediamo pazienza.',
 	'msg_registration_confirmed_but_moderation' => 'Hai confermato la tua e-mail e ora stai aspettando l\'attivazione da parte di un amministratore.',
