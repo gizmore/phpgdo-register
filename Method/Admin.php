@@ -13,7 +13,7 @@ final class Admin extends Method
 {
 	use MethodAdmin;
 	
-	public function getMethodName() : string
+	public function getMethodTitle() : string
 	{
 		return t('perm_admin');
 	}
