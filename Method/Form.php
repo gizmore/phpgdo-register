@@ -76,8 +76,8 @@ class Form extends MethodForm
 			$form->addField(GDT_Validator::make()->validatorFor($form, 'user_email', [$this, 'validateUniqueEmail']));
 		}
 		
-		if (!Application::instance()->isCLI())
-		{
+// 		if (!Application::instance()->isCLI())
+// 		{
     		if ($module->cfgTermsOfService())
     		{
     			$form->addField(GDT_Checkbox::make('tos')->required()->label('tos_label', [$module->cfgTosUrl(), $module->cfgPrivacyURL()]));
@@ -87,7 +87,7 @@ class Form extends MethodForm
     		{
     			$form->addField(GDT_Captcha::make('captcha'));
     		}
-		}
+// 		}
 
 		$form->addField(GDT_AntiCSRF::make());
 
