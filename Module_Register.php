@@ -7,7 +7,6 @@ use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_UInt;
 use GDO\Date\GDT_Duration;
 use GDO\Net\GDT_Url;
-use GDO\Realname\GDT_Realname;
 use GDO\UI\GDT_Bar;
 use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Link;
@@ -19,6 +18,7 @@ use GDO\Net\GDT_IP;
 use GDO\Date\GDT_DateTime;
 use GDO\Date\Time;
 use GDO\User\Module_User;
+use GDO\Core\GDT_String;
 
 /**
  * Registration module.
@@ -83,7 +83,7 @@ class Module_Register extends GDO_Module
 			GDT_Checkbox::make('activation_login')->initial('1'),
 			GDT_Checkbox::make('signup_password_retype')->initial('0'),
 			GDT_Email::make('signup_mail_sender')->initial(GDO_BOT_EMAIL),
-			GDT_Realname::make('signup_mail_sender_name')->icon('email')->initial(GDO_BOT_NAME),
+			GDT_String::make('signup_mail_sender_name')->icon('email')->initial(GDO_BOT_NAME),
 		    GDT_Checkbox::make('hook_sidebar')->initial('1'),
 		];
 	}
