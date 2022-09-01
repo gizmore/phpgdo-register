@@ -19,7 +19,7 @@ final class Activations extends MethodQueryTable
 {
 	use MethodAdmin;
 	
-	public function beforeExecute() : void
+	public function onRenderTabs() : void
 	{
 	    $this->renderAdminBar();
 	    Module_Register::instance()->renderAdminBar();

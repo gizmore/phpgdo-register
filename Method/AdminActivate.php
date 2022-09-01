@@ -19,7 +19,7 @@ final class AdminActivate extends Method
     
     public function getPermission() : ?string { return 'staff'; }
     
-    public function beforeExecute() : void
+    public function onRenderTabs() : void
     {
         $this->renderAdminBar();
         Module_Register::instance()->renderAdminBar();

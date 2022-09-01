@@ -123,7 +123,7 @@ class Form extends MethodForm
 
 	public function validateUniqueEmail(GDT_Form $form, GDT_Email $email, $value)
 	{
-		$count = GDO_UserSetting::table()->countWhere("uset_name='email' AND uset_value=".GDO::quoteS($email->getVar()));
+		$count = GDO_UserSetting::table()->countWhere("uset_name='email' AND uset_var=".GDO::quoteS($email->getVar()));
 		return $count == 0 ? true : $email->error('err_email_taken');
 	}
 	
