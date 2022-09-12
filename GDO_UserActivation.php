@@ -38,7 +38,7 @@ class GDO_UserActivation extends GDO
 		    GDT_Message::make('ua_message'),
 
 			# We copy these fields to user table
-			GDT_Username::make('user_name')->notNull(),
+			GDT_Username::make('user_name')->notNull()->unique(false),
 			GDT_Password::make('user_password'),
 			GDT_Email::make('user_email'),
 			GDT_IP::make('user_register_ip')->notNull(),
