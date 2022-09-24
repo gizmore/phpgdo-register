@@ -15,6 +15,7 @@ use GDO\Net\GDT_Url;
 use GDO\UI\GDT_Message;
 use GDO\Date\GDT_Timestamp;
 use GDO\Crypto\BCrypt;
+use GDO\Date\Time;
 
 /**
  * User activation table.
@@ -72,6 +73,12 @@ class GDO_UserActivation extends GDO
 	{
 		$bcrypt = BCrypt::create($this->getPassword());
 		return $bcrypt->__toString();
+	}
+
+	public function getActivateTime() : int
+	{
+		$created = $this->gdoVar('ua_time');
+		return round(Time::getAge($created));
 	}
 
 }

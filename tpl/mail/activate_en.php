@@ -1,3 +1,8 @@
+<?php
+namespace GDO\Register\tpl\mail;
+/** @var $username string **/
+/** @var $activation_url string **/
+?>
 <div>
 Hello <?php echo $username; ?><br/>
 <br/>

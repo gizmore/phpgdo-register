@@ -170,6 +170,7 @@ class Module_Register extends GDO_Module
 		{
 			$aboutMe = $activation->getMessage();
 			Module_User::instance()->saveUserSetting($user, 'about_me', $aboutMe);
+			$this->saveUserSetting($user, 'activation_speed', $activation->getActivateTime());
 		}
 		GDO_UserSignup::onSignup($user);
 	}
@@ -182,6 +183,7 @@ class Module_Register extends GDO_Module
 		return [
 			GDT_IP::make('register_ip')->noacl(),
 			GDT_DateTime::make('register_date'),
+			GDT_Duration::make('activation_speed'),
 		];
 	}
 	

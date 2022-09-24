@@ -1,3 +1,6 @@
+<?php
+namespace GDO\Register\tpl\page;
+?>
 <h1>Terms of Service</h1>
 
 <div class="gdo-default-hint-to-hide">

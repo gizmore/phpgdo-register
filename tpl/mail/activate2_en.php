@@ -1,3 +1,9 @@
+<?php
+namespace GDO\Register\tpl\mail;
+/** @var $admin string **/
+/** @var $username string **/
+/** @var $url string **/
+?>
 <div>
 Hello <?php echo $username; ?><br/>
 <br/>

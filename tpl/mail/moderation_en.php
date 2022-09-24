@@ -1,3 +1,11 @@
+<?php
+namespace GDO\Register\tpl\mail;
+/** @var $nick string **/
+/** @var $username string **/
+/** @var $email string **/
+/** @var $ip string **/
+/** @var $message string **/
+?>
 <div>
 Hello <?=$username?><br/>
 <br/>
