@@ -46,14 +46,20 @@ final class RegisterTest extends TestCase
         $method = Guest::make();
         $parameters = ['user_guest_name' => 'Casper', 'submit' => 1];
         GDT_MethodTest::make()->method($method)->inputs($parameters)->execute();
-        $this->assert200("Check if guest registration works.");
-        
-//         MethodTest::$USERS[] = $user = GDO_User::current();
-        $user = GDO_User::current();
-        assertEquals('Casper', $user->getGuestName(), 'Check if guest register was success.');
-        
-        $user = Module_Core::instance()->cfgSystemUser();
-        assertEquals('system', $user->getType(), 'Check if system user is still there.');
+        if (!Module_Register::instance()->cfgGuestSignup())
+        {
+        	$this->assert409('Check if guests cannot signup');
+        }
+        else
+        {
+        	$this->assert200("Check if guest registration works.");
+
+        	$user = GDO_User::current();
+	        assertEquals('Casper', $user->getGuestName(), 'Check if guest register was success.');
+	        
+	        $user = Module_Core::instance()->cfgSystemUser();
+	        assertEquals('system', $user->getType(), 'Check if system user is still there.');
+        }
     }
     
     public function testTOSFailed()

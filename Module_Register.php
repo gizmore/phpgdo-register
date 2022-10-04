@@ -17,8 +17,8 @@ use GDO\Mail\GDT_Email;
 use GDO\Net\GDT_IP;
 use GDO\Date\GDT_DateTime;
 use GDO\Date\Time;
-use GDO\User\Module_User;
 use GDO\Core\GDT_String;
+use GDO\Core\Module_Core;
 
 /**
  * Registration module.
@@ -50,7 +50,7 @@ class Module_Register extends GDO_Module
 	##############
 	### Module ###
 	##############
-	public function getFriendencies() : array { return ['Cronjob', 'Mail']; }
+	public function getFriendencies() : array { return ['Cronjob', 'Mail', 'AboutMe']; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/register'); }
 	public function href_administrate_module() : ?string { return href('Register', 'Admin'); }
 
@@ -88,7 +88,7 @@ class Module_Register extends GDO_Module
 		];
 	}
 	public function cfgCaptcha() { return module_enabled('Captcha') && $this->getConfigValue('captcha'); }
-	public function cfgGuestSignup() { return $this->getConfigValue('guest_signup'); }
+	public function cfgGuestSignup() { return $this->getConfigValue('guest_signup') && Module_Core::instance()->cfgAllowGuests(); }
 	public function cfgEmailActivation() { return $this->getConfigValue('email_activation'); }
 	public function cfgEmailActivationTimeout() { return $this->getConfigValue('email_activation_timeout'); }
 	public function cfgAdminActivation() { return $this->getConfigValue('admin_activation'); }
@@ -137,9 +137,9 @@ class Module_Register extends GDO_Module
 	    }
 	}
 	
-	##################
-	### Form Hooks ###
-	##################
+	#############
+	### Hooks ###
+	#############
 	public function hookLoginForm(GDT_Form $form)
 	{
 	    $form->actions()->addField(GDT_Button::make('link_register')->secondary()->href(href('Register', 'Form')));
@@ -168,8 +168,10 @@ class Module_Register extends GDO_Module
 		$this->saveUserSetting($user, 'register_date', Time::getDate());
 		if ($activation)
 		{
-			$aboutMe = $activation->getMessage();
-			Module_User::instance()->saveUserSetting($user, 'about_me', $aboutMe);
+			if ($aboutMe = $activation->getMessage())
+			{
+				$user->saveSettingVar('AboutMe', 'about_me', $aboutMe);
+			}
 			$this->saveUserSetting($user, 'activation_speed', $activation->getActivateTime());
 		}
 		GDO_UserSignup::onSignup($user);

@@ -20,18 +20,20 @@ use GDO\Language\Trans;
  * Activate a user via token.
  * Call activation from other activators as well.
  * @author gizmore
- * @version 6.10    
- * @since 3.04
+ * @version 7.0.1
+ * @since 3.0.4
  */
 class Activate extends Method
 {
+	public function isAlwaysTransactional() : bool { return true; }
+	
 	public function gdoParameters() : array
 	{
-		return array(
+		return [
 			GDT_String::make('id')->notNull(),
 			GDT_String::make('token')->notNull(),
 		    GDT_Checkbox::make('convert_guest')->initial('1')->notNull(),
-		);
+		];
 	}
 	
 	public function getMethodTitle() : string

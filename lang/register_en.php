@@ -37,8 +37,8 @@ return [
 	'err_guest_name_taken' => 'This guest name has been taken already.',
 	'msg_registered_as_guest' => 'You are now using the site as %s.',
 	'msg_registered_as_guest_back' => 'You are now using the site as %s. <a href="%s">Click here</a> to continue.',
-	'link_register' => 'goto Signup',
-	'link_register_guest' => 'continue as Guest',
+	'link_register' => 'Goto Signup',
+	'link_register_guest' => 'Continue as Guest',
 	#############################################################################
 	'mail_activate_subj' => '%s: Activate your account',
 	#############################################################################
