@@ -65,6 +65,14 @@ class Module_Register extends GDO_Module
 	##############
 	### Config ###
 	##############
+	public function getPrivacyRelatedFields(): array
+	{
+		return [
+			$this->getConfigColumn('signup_ip'),
+			$this->getConfigColumn('email_activation'),
+		];
+	}
+	
 	public function getConfig() : array
 	{
 		return [
@@ -74,12 +82,13 @@ class Module_Register extends GDO_Module
 			GDT_Duration::make('email_activation_timeout')->initial("2h")->min(0)->max(31536000),
 		    GDT_Checkbox::make('admin_activation')->initial('0'),
 		    GDT_Checkbox::make('admin_activation_test')->initial('0'),
+			GDT_Checkbox::make('signup_ip')->initial('1'),
 		    GDT_UInt::make('ip_signup_count')->initial('4')->min(0)->max(100),
 		    GDT_UInt::make('local_ip_signup_count')->initial('100000')->min(0)->max(100000),
 		    GDT_Duration::make('ip_signup_duration')->initial('24h')->min(0)->max(31536000),
 			GDT_Checkbox::make('force_tos')->initial('1'),
-			GDT_Url::make('tos_url')->allowAll(true)->initial(href('Register', 'TOS', '', false)),
-			GDT_Url::make('privacy_url')->allowAll(true)->initial(href('Core', 'Privacy', '', false)),
+			GDT_Url::make('tos_url')->allowAll(true)->initial(hrefNoSeo('Register', 'TOS')),
+			GDT_Url::make('privacy_url')->allowAll(true)->initial(hrefNoSeo('Core', 'Privacy')),
 			GDT_Checkbox::make('activation_login')->initial('1'),
 			GDT_Checkbox::make('signup_password_retype')->initial('0'),
 			GDT_Email::make('signup_mail_sender')->initial(GDO_BOT_EMAIL),
@@ -95,10 +104,15 @@ class Module_Register extends GDO_Module
 	public function cfgAdminActivationTest() { return $this->getConfigValue('admin_activation_test'); }
 	public function cfgMaxUsersPerIP()
 	{
+		if (!$this->cfgSignupIP())
+		{
+			return 100; # disable max
+		}
 	    return GDT_IP::isLocal() ? 
 	        $this->getConfigValue('local_ip_signup_count') :
 	        $this->getConfigValue('ip_signup_count');
 	}
+	public function cfgSignupIP() { return $this->getConfigValue('signup_ip'); }
 	public function cfgMaxUsersPerIPTimeout() { return $this->getConfigValue('ip_signup_duration'); }
 	public function cfgTermsOfService() { return $this->getConfigValue('force_tos'); }
 	public function cfgTosUrl() { return $this->getConfigVar('tos_url'); }
@@ -164,7 +178,10 @@ class Module_Register extends GDO_Module
 	
 	public function hookUserActivated(GDO_User $user, GDO_UserActivation $activation=null)
 	{
-		$this->saveUserSetting($user, 'register_ip', GDT_IP::$CURRENT);
+		if ($this->cfgSignupIP())
+		{
+			$this->saveUserSetting($user, 'register_ip', GDT_IP::current());
+		}
 		$this->saveUserSetting($user, 'register_date', Time::getDate());
 		if ($activation)
 		{

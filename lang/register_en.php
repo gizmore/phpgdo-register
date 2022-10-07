@@ -6,6 +6,7 @@ return [
 	'cfg_email_activation' => 'Force member activation by email',
 	'cfg_email_activation_timeout' => 'Timeout for email activation',
 	'cfg_admin_activation' => 'Force admin activation',
+	'cfg_signup_ip' => 'Enable signup IP storage?',
 	'cfg_ip_signup_count' => 'Max number of accounts per IP',
 	'cfg_ip_signup_duration' => 'IP reject timeout',
 	'cfg_force_tos' => 'Force TOS reading',
