@@ -61,19 +61,19 @@ class Form extends MethodForm
 		}
 		
 		$form->addField(GDT_Username::make('user_name')->required());
-		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_name', [$this, 'validateUniqueUsername']));
-		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_name', [$this, 'validateUniqueIP']));
+		$form->addField(GDT_Validator::make('valid_signup_name')->validatorFor($form, 'user_name', [$this, 'validateUniqueUsername']));
+		$form->addField(GDT_Validator::make('valid_signup_ip')->validatorFor($form, 'user_name', [$this, 'validateUniqueIP']));
 		$form->addField(GDT_Password::make('user_password')->required());
 		
 		if ($module->cfgPasswordRetype())
 		{
 			$form->addField(GDT_Password::make('password_retype')->required()->label('password_retype'));
-			$form->addField(GDT_Validator::make()->validatorFor($form, 'password_retype', [$this, 'validatePasswordRetype']));
+			$form->addField(GDT_Validator::make('valid_password_retype')->validatorFor($form, 'password_retype', [$this, 'validatePasswordRetype']));
 		}
 		if ($module->cfgEmailActivation() || $module->cfgAdminActivation())
 		{
 			$form->addField(GDT_Email::make('user_email')->required());
-			$form->addField(GDT_Validator::make()->validatorFor($form, 'user_email', [$this, 'validateUniqueEmail']));
+			$form->addField(GDT_Validator::make('valid_user_email')->validatorFor($form, 'user_email', [$this, 'validateUniqueEmail']));
 		}
 		
 // 		if (!Application::instance()->isCLI())
@@ -81,7 +81,7 @@ class Form extends MethodForm
     		if ($module->cfgTermsOfService())
     		{
     			$form->addField(GDT_Checkbox::make('tos')->required()->label('tos_label', [$module->cfgTosUrl(), $module->cfgPrivacyURL()]));
-    			$form->addField(GDT_Validator::make()->validatorFor($form, 'tos', [$this, 'validateTOS']));
+    			$form->addField(GDT_Validator::make('valid_tos')->validatorFor($form, 'tos', [$this, 'validateTOS']));
     		}
     		if ($module->cfgCaptcha())
     		{
