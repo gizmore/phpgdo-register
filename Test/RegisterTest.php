@@ -48,7 +48,7 @@ final class RegisterTest extends TestCase
         GDT_MethodTest::make()->method($method)->inputs($parameters)->execute();
         if (!Module_Register::instance()->cfgGuestSignup())
         {
-        	$this->assert409('Check if guests cannot signup');
+        	$this->assert403('Check if guests cannot signup');
         }
         else
         {
