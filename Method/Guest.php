@@ -45,12 +45,12 @@ class Guest extends MethodForm
 		$module = Module_Register::instance();
 		$signup = Form::make();
 		
-		$form->addField(GDT_Username::make('user_guest_name')->required());
+		$form->addField(GDT_Username::make('user_guest_name')->notNull());
 		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_guest_name', [$this, 'validateGuestNameTaken']));
 		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_guest_name', [$signup, 'validateUniqueIP']));
 		if ($module->cfgTermsOfService())
 		{
-			$form->addField(GDT_Checkbox::make('tos')->required()->label('tos_label', [$module->cfgTosUrl(), $module->cfgPrivacyUrl()]));
+			$form->addField(GDT_Checkbox::make('tos')->notNull()->label('tos_label', [$module->cfgTosUrl(), $module->cfgPrivacyUrl()]));
 			$form->addField(GDT_Validator::make()->validatorFor($form, 'tos', [$signup, 'validateTOS']));
 		}
 		if ($module->cfgCaptcha())
