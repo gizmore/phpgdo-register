@@ -134,7 +134,7 @@ class Form extends MethodForm
 	
 	public function formInvalid(GDT_Form $form)
 	{
-		return $this->error('err_register');
+		return $this->error('err_register') . $this->renderPage();
 	}
 	
 	public function formValidated(GDT_Form $form)
