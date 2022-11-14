@@ -28,6 +28,7 @@ use GDO\Core\GDT_Response;
 use GDO\UI\GDT_Message;
 use GDO\Register\GDO_UserSignup;
 use GDO\User\GDO_UserSetting;
+use GDO\Core\GDT_Tuple;
 
 /**
  * Registration form.
@@ -134,7 +135,9 @@ class Form extends MethodForm
 	
 	public function formInvalid(GDT_Form $form)
 	{
-		return $this->error('err_register') . $this->renderPage();
+		return GDT_Tuple::makeWith(
+			$this->error('err_register'),
+			$this->renderPage());
 	}
 	
 	public function formValidated(GDT_Form $form)
