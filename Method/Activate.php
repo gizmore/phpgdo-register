@@ -114,7 +114,6 @@ class Activate extends Method
 	    {
     	    $user = GDO_User::current();
     	    $user->setVars($activation->getGDOVars());
-    	    $user->setVar('user_password', $activation->getPasswordHash());
 	    }
 	    else
 	    {

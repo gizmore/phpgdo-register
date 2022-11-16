@@ -7,7 +7,6 @@ use GDO\Core\GDT_CreatedAt;
 use GDO\Core\GDT_DeletedAt;
 use GDO\Core\GDT_Serialize;
 use GDO\Core\GDT_Token;
-use GDO\Crypto\GDT_Password;
 use GDO\Mail\GDT_Email;
 use GDO\Net\GDT_IP;
 use GDO\User\GDT_Username;
@@ -16,6 +15,7 @@ use GDO\UI\GDT_Message;
 use GDO\Date\GDT_Timestamp;
 use GDO\Crypto\BCrypt;
 use GDO\Date\Time;
+use GDO\Crypto\GDT_PasswordHash;
 
 /**
  * User activation table.
@@ -40,7 +40,7 @@ class GDO_UserActivation extends GDO
 
 			# We copy these fields to user table
 			GDT_Username::make('user_name')->notNull()->unique(false),
-			GDT_Password::make('user_password'),
+			GDT_PasswordHash::make('user_password'),
 			GDT_Email::make('user_email'),
 			GDT_IP::make('user_register_ip')->notNull(),
 		    
@@ -64,16 +64,16 @@ class GDO_UserActivation extends GDO
 	
 	public function renderUserName() { return $this->gdoVar('user_name'); }
 	
-	public function getPassword() : string
+	public function getPasswordHash() : string
 	{
 		return $this->gdoVar('user_password');
 	}
 
-	public function getPasswordHash() : string
-	{
-		$bcrypt = BCrypt::create($this->getPassword());
-		return $bcrypt->__toString();
-	}
+// 	public function getPasswordHash() : string
+// 	{
+// 		$bcrypt = BCrypt::create($this->getPassword());
+// 		return $bcrypt->__toString();
+// 	}
 
 	public function getActivateTime() : int
 	{
