@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Register\lang;
 return [
+	'module_register' => 'Registrierung',
 	'cfg_captcha' => 'Registrierungs-Captcha aktivieren?',
 	'cfg_guest_signup' => 'Gastkonten erlauben?',
 	'cfg_email_activation' => 'Aktivierungs-Mail erzwingen?',
