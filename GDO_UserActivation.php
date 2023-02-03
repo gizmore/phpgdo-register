@@ -13,7 +13,6 @@ use GDO\User\GDT_Username;
 use GDO\Net\GDT_Url;
 use GDO\UI\GDT_Message;
 use GDO\Date\GDT_Timestamp;
-use GDO\Crypto\BCrypt;
 use GDO\Date\Time;
 use GDO\Crypto\GDT_PasswordHash;
 
