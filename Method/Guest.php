@@ -62,7 +62,7 @@ class Guest extends MethodForm
 		GDT_Hook::callHook('GuestForm', $form);
 	}
 
-	public function validateGuestNameTaken(GDT_Form $form, GDT_Username $field, $value)
+	public function validateGuestNameTaken(GDT_Form $form, GDT_Username $field, $value): bool
 	{
 		if (GDO_User::table()->countWhere('user_guest_name='.quote($value)))
 		{
@@ -74,12 +74,10 @@ class Guest extends MethodForm
 	public function formValidated(GDT_Form $form)
 	{
 		$user = GDO_User::current();
-		$user->persistent()->saveVars(array(
+		$user->persistent()->saveVars([
 		    'user_guest_name' => $form->getFormVar('user_guest_name'),
 			'user_type' => GDT_UserType::GUEST,
-// 			'user_register_ip' => GDT_IP::current(),
-// 			'user_register_time' => Time::getDate(),
-		));
+		]);
 		
 		$authResponse = \GDO\Login\Method\Form::make()->loginSuccess($user);
 
@@ -87,7 +85,7 @@ class Guest extends MethodForm
 		
 		if ($backto = Common::getRequestString('_backto'))
 		{
-			return $this->message('msg_registered_as_guest_back', [$user->renderUserName(), $backto])->addField($authResponse);
+			return $this->message('msg_registered_as_guest_back', [$user->renderUserName(), html($backto)])->addField($authResponse);
 		}
 		return $this->message('msg_registered_as_guest', [$user->renderUserName()])->addField($authResponse);
 	}
