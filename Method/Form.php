@@ -3,8 +3,10 @@ namespace GDO\Register\Method;
 
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\Application;
+use GDO\Core\GDO_Error;
 use GDO\Core\GDT_Hook;
 use GDO\Core\GDO;
+use GDO\Crypto\GDT_PasswordHash;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
@@ -113,24 +115,25 @@ class Form extends MethodForm
 		$cut = Time::getDate($cut);
 		$count = GDO_UserSignup::table()->countWhere("us_ip={$ip} AND us_created>='{$cut}'");
 		$max = Module_Register::instance()->cfgMaxUsersPerIP();
-		return $count < $max ? true : $field->error('err_ip_signup_max_reached', [$max]);
+		return ($count < $max) ||
+			$field->error('err_ip_signup_max_reached', [$max]);
 	}
 	
-	public function validateUniqueUsername(GDT_Form $form, GDT_Username $username, $value)
+	public function validateUniqueUsername(GDT_Form $form, GDT_Username $username, $value): bool
 	{
 		$existing = GDO_User::table()->getByName($value);
-		return $existing ? $username->error('err_username_taken') : true;
+		return $existing || $username->error('err_username_taken');
 	}
 
-	public function validateUniqueEmail(GDT_Form $form, GDT_Email $email, $value)
+	public function validateUniqueEmail(GDT_Form $form, GDT_Email $email, $value): bool
 	{
 		$count = GDO_UserSetting::table()->countWhere("uset_name='email' AND uset_var=".GDO::quoteS($email->getVar()));
-		return $count == 0 ? true : $email->error('err_email_taken');
+		return ($count == 0) || $email->error('err_email_taken');
 	}
 	
 	public function validateTOS(GDT_Form $form, GDT_Checkbox $field)
 	{
-		return $field->getValue() ? true : $field->error('err_tos_not_checked');
+		return $field->getValue() || $field->error('err_tos_not_checked');
 	}
 	
 	public function formInvalid(GDT_Form $form)
@@ -148,6 +151,9 @@ class Form extends MethodForm
 	################
 	### Register ###
 	################
+	/**
+	 * @throws GDO_Error
+	 */
 	public function onRegister(GDT_Form $form)
 	{
 		$module = Module_Register::instance();
@@ -174,7 +180,7 @@ class Form extends MethodForm
 	########################
 	### Email Activation ###
 	########################
-	public function onEmailActivation(GDO_UserActivation $activation)
+	public function onEmailActivation(GDO_UserActivation $activation): GDT
 	{
 		$module = Module_Register::instance();
 		$mail = new Mail();
@@ -187,7 +193,7 @@ class Form extends MethodForm
 		return $this->message('msg_activation_mail_sent');
 	}
 	
-	public function getMailBody(GDO_UserActivation $activation)
+	public function getMailBody(GDO_UserActivation $activation): string
 	{
 		$tVars = [
 			'username' => $activation->getUsername(),

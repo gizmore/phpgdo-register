@@ -15,6 +15,13 @@ use function PHPUnit\Framework\assertNotEmpty;
 
 final class RegisterTest extends TestCase
 {
+	public function testModuleVarHandling(): void
+	{
+		$module = Module_Register::instance();
+		$module->saveConfigValue('signup_password_retype', false);
+		self::assertTrue($module->cfgPasswordRetype() === false, 'Test if module vars are cached correctly upon change.');
+	}
+
     public function testSuccess()
     {
         # register only works as ghost
@@ -31,9 +38,9 @@ final class RegisterTest extends TestCase
         $parameters = [
             'user_name' => 'Peter1',
             'user_password' => '11111111',
-        	'submit' => 1,
         ];
-        GDT_MethodTest::make()->method($method)->inputs($parameters)->execute();
+        $m = GDT_MethodTest::make()->method($method)->inputs($parameters);
+		$m->execute('submit');
         $this->assert200("Check if registration works");
         assertNotEmpty(GDO_User::getByName('Peter1'), "Check if new user Peter1 can sign up.");
     }
@@ -44,8 +51,9 @@ final class RegisterTest extends TestCase
         $this->userGhost();
         
         $method = Guest::make();
-        $parameters = ['user_guest_name' => 'Casper', 'submit' => 1];
-        GDT_MethodTest::make()->method($method)->inputs($parameters)->execute();
+        $parameters = ['user_guest_name' => 'Casper'];
+        $m = GDT_MethodTest::make()->method($method)->inputs($parameters);
+		$m->execute('submit');
         if (!Module_Register::instance()->cfgGuestSignup())
         {
         	$this->assert403('Check if guests cannot signup');

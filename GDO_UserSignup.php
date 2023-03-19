@@ -26,7 +26,7 @@ final class GDO_UserSignup extends GDO
 		];
 	}
 	
-	public static function onSignup(GDO_User $user) : self
+	public static function onSignup(GDO_User $user): static
 	{
 		return self::blank()->insert();
 	}
