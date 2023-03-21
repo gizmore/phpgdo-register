@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Register\lang;
+
 return [
 	'module_register' => 'Registrazione',
 	'cfg_captcha' => 'Attivare registrazione Capcha',
@@ -63,5 +64,5 @@ return [
 	'msg_admin_will_activate_you' => 'Un\'e-mail è stata inviata agli amministratori con una copia per te. Non appena sarai stato attivato riceverai un\'altra email.',
 	'register_date' => 'Registriert am',
 	'mt_register_activations' => 'Attivazioni in sospeso',
-	
+
 ];

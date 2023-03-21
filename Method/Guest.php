@@ -2,49 +2,50 @@
 namespace GDO\Register\Method;
 
 use GDO\Captcha\GDT_Captcha;
+use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Hook;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
+use GDO\Form\GDT_Validator;
 use GDO\Form\MethodForm;
 use GDO\Register\Module_Register;
-use GDO\User\GDT_Username;
 use GDO\User\GDO_User;
-use GDO\Form\GDT_Validator;
-use GDO\Core\GDT_Checkbox;
-use GDO\Util\Common;
+use GDO\User\GDT_Username;
 use GDO\User\GDT_UserType;
+use GDO\Util\Common;
 
 /**
  * Implements guest signup.
  * Turns a ghost into a user with a guest name. Bound forever to his session until he upgrades.
  * Uses the register form to validate variables that are similiar to it.
- * 
+ *
  * - Validate Mass signup via IP
  * - Validate TOS checkbox
- * 
+ *
  * @TODO: Implement guest upgrade.
- * @author gizmore
  * @version 6.11.0
  * @since 6.0.0
+ * @author gizmore
  * @see Form
  */
 class Guest extends MethodForm
 {
-	public function isUserRequired() : bool { return false; }
-	
-	public function getUserType() : ?string { return 'guest,ghost'; }
-	
-	public function isEnabled() : bool
+
+	public function isUserRequired(): bool { return false; }
+
+	public function getUserType(): ?string { return 'guest,ghost'; }
+
+	public function isEnabled(): bool
 	{
 		return Module_Register::instance()->cfgGuestSignup();
 	}
-	
-	public function createForm(GDT_Form $form) : void
+
+	public function createForm(GDT_Form $form): void
 	{
 		$module = Module_Register::instance();
 		$signup = Form::make();
-		
+
 		$form->addField(GDT_Username::make('user_guest_name')->notNull());
 		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_guest_name', [$this, 'validateGuestNameTaken']));
 		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_guest_name', [$signup, 'validateUniqueIP']));
@@ -62,32 +63,32 @@ class Guest extends MethodForm
 		GDT_Hook::callHook('GuestForm', $form);
 	}
 
-	public function validateGuestNameTaken(GDT_Form $form, GDT_Username $field, $value): bool
-	{
-		if (GDO_User::table()->countWhere('user_guest_name='.quote($value)))
-		{
-			return $field->error('err_guest_name_taken');
-		}
-		return true;
-	}
-	
 	public function formValidated(GDT_Form $form)
 	{
 		$user = GDO_User::current();
 		$user->persistent()->saveVars([
-		    'user_guest_name' => $form->getFormVar('user_guest_name'),
+			'user_guest_name' => $form->getFormVar('user_guest_name'),
 			'user_type' => GDT_UserType::GUEST,
 		]);
-		
+
 		$authResponse = \GDO\Login\Method\Form::make()->loginSuccess($user);
 
 		GDT_Hook::callWithIPC('UserActivated', $user, null);
-		
+
 		if ($backto = Common::getRequestString('_backto'))
 		{
 			return $this->message('msg_registered_as_guest_back', [$user->renderUserName(), html($backto)])->addField($authResponse);
 		}
 		return $this->message('msg_registered_as_guest', [$user->renderUserName()])->addField($authResponse);
+	}
+
+	public function validateGuestNameTaken(GDT_Form $form, GDT_Username $field, $value): bool
+	{
+		if (GDO_User::table()->countWhere('user_guest_name=' . quote($value)))
+		{
+			return $field->error('err_guest_name_taken');
+		}
+		return true;
 	}
 
 }

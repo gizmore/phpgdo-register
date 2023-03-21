@@ -5,4 +5,5 @@ use GDO\UI\MethodPage;
 
 final class TOS extends MethodPage
 {
+
 }

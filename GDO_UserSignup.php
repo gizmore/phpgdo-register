@@ -2,21 +2,27 @@
 namespace GDO\Register;
 
 use GDO\Core\GDO;
-use GDO\Net\GDT_IP;
 use GDO\Core\GDT_CreatedAt;
-use GDO\User\GDO_User;
 use GDO\Core\GDT_CreatedBy;
+use GDO\Net\GDT_IP;
+use GDO\User\GDO_User;
 
 /**
  * Record succesful signups.
- * 
- * @author gizmore
+ *
  * @since 7.0.1
+ * @author gizmore
  */
 final class GDO_UserSignup extends GDO
 {
-	public function gdoCached() : bool { return false; }
-	
+
+	public static function onSignup(GDO_User $user): self
+	{
+		return self::blank()->insert();
+	}
+
+	public function gdoCached(): bool { return false; }
+
 	public function gdoColumns(): array
 	{
 		return [
@@ -24,11 +30,6 @@ final class GDO_UserSignup extends GDO
 			GDT_CreatedAt::make('us_created'),
 			GDT_IP::make('us_ip'),
 		];
-	}
-	
-	public static function onSignup(GDO_User $user): static
-	{
-		return self::blank()->insert();
 	}
 
 }

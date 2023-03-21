@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Register\lang;
+
 return [
 	'module_register' => 'Registrierung',
 	'cfg_captcha' => 'Registrierungs-Captcha aktivieren?',
@@ -42,7 +43,7 @@ return [
 	'link_register' => 'zur Registrierung',
 	'link_register_guest' => 'weiter als Gast',
 	#############################################################################
-	'mail_activate_subj'=> '[%s] Activieren Sie Ihr Konto',
+	'mail_activate_subj' => '[%s] Activieren Sie Ihr Konto',
 	#############################################################################
 	'mt_register_form' => 'Registrieren',
 	'mt_register_guest' => 'Als Gast anmelden',
