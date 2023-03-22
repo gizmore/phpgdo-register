@@ -68,8 +68,10 @@ class Form extends MethodForm
 	public function validateUniqueUsername(GDT_Form $form, GDT_Username $username, $value): bool
 	{
 		$existing = GDO_User::table()->getByName($value);
-		return $existing || $username->error('err_username_taken');
-	}	public function renderPage(): GDT
+		return $existing ? $username->error('err_username_taken') : true;
+	}
+
+	public function renderPage(): GDT
 	{
 		if (Module_Register::instance()->cfgAdminActivation())
 		{

@@ -37,13 +37,13 @@ final class RegisterTest extends TestCase
 		$module->saveConfigValue('force_tos', false);
 		$method = Form::make();
 		$parameters = [
-			'user_name' => 'Peter1',
+			'user_name' => 'Peter3',
 			'user_password' => '11111111',
 		];
 		$m = GDT_MethodTest::make()->method($method)->inputs($parameters);
 		$m->execute('submit');
 		$this->assert200('Check if registration works');
-		assertNotEmpty(GDO_User::getByName('Peter1'), 'Check if new user Peter1 can sign up.');
+		assertNotEmpty(GDO_User::getByName('Peter3'), 'Check if new user Peter1 can sign up.');
 	}
 
 	public function testGuest()
