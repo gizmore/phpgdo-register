@@ -73,7 +73,7 @@ class GDO_UserActivation extends GDO
 
 	public function renderUserName() { return $this->gdoVar('user_name'); }
 
-	public function getPasswordHash(): string
+	public function getPasswordHash(): ?string
 	{
 		return $this->gdoVar('user_password');
 	}

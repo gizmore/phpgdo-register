@@ -2,6 +2,7 @@
 namespace GDO\Register\Method;
 
 use GDO\Captcha\GDT_Captcha;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Hook;
 use GDO\Form\GDT_AntiCSRF;
@@ -36,7 +37,7 @@ class Guest extends MethodForm
 
 	public function getUserType(): ?string { return 'guest,ghost'; }
 
-	public function isEnabled(): bool
+	public function isEnabled(): string
 	{
 		return Module_Register::instance()->cfgGuestSignup();
 	}
@@ -63,7 +64,7 @@ class Guest extends MethodForm
 		GDT_Hook::callHook('GuestForm', $form);
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		$user = GDO_User::current();
 		$user->persistent()->saveVars([

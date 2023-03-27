@@ -2,6 +2,7 @@
 namespace GDO\Register\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Template;
 use GDO\Core\Method;
 use GDO\Language\Trans;
@@ -18,7 +19,7 @@ final class AdminActivate extends Method
 
 	public function isTrivial(): bool { return false; }
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$activation = GDO_UserActivation::table()->find(Common::getRequestString('id'));
 

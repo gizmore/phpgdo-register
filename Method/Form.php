@@ -140,14 +140,14 @@ class Form extends MethodForm
 
 
 
-	public function formInvalid(GDT_Form $form)
+	public function formInvalid(GDT_Form $form): GDT
 	{
 		return GDT_Tuple::makeWith(
 			$this->error('err_register'),
 			$this->renderPage());
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		return $this->onRegister($form);
 	}

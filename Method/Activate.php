@@ -2,8 +2,11 @@
 namespace GDO\Register\Method;
 
 use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Hook;
+use GDO\Core\GDT_RegEx;
+use GDO\Core\GDT_Response;
 use GDO\Core\GDT_String;
 use GDO\Core\GDT_Template;
 use GDO\Core\Method;
@@ -43,7 +46,7 @@ class Activate extends Method
 		return t('btn_activate');
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		return $this->activate(Common::getRequestString('id'), Common::getRequestString('token'));
 	}
@@ -99,9 +102,10 @@ class Activate extends Method
 				}
 			}
 		}
+		return GDT_Response::make();
 	}
 
-	public function convertGuest() { return $this->gdoParameterValue('convert_guest'); }
+	public function convertGuest(): string { return $this->gdoParameterVar('convert_guest'); }
 
 	private function sendModerationMails(GDO_UserActivation $activation)
 	{
