@@ -43,7 +43,7 @@ final class RegisterTest extends TestCase
 		$m = GDT_MethodTest::make()->method($method)->inputs($parameters);
 		$m->execute('submit');
 		$this->assert200('Check if registration works');
-		assertNotEmpty(GDO_User::getByName('Peter3'), 'Check if new user Peter1 can sign up.');
+		assertNotEmpty(GDO_User::getByName('Peter3'), 'Check if new user Peter3 can sign up.');
 	}
 
 	public function testGuest()
@@ -51,10 +51,13 @@ final class RegisterTest extends TestCase
 		# Another attempt which will not work.
 		$this->userGhost();
 
+		$module = Module_Register::instance();
+		$module->saveConfigValue('force_tos', false);
 		$method = Guest::make();
 		$parameters = ['user_guest_name' => 'Casper'];
 		$m = GDT_MethodTest::make()->method($method)->inputs($parameters);
 		$m->execute('submit');
+		Module_Core::instance()->saveConfigVar('allow_guests', '0');
 		if (!Module_Register::instance()->cfgGuestSignup())
 		{
 			$this->assert403('Check if guests cannot signup');
