@@ -1,24 +1,8 @@
 <?php
 namespace GDO\Register;
 
-use GDO\Core\Application;
-use GDO\Core\GDO_Module;
-use GDO\Core\GDT_Checkbox;
-use GDO\Core\GDT_String;
-use GDO\Core\GDT_UInt;
-use GDO\Core\Module_Core;
-use GDO\Date\GDT_DateTime;
-use GDO\Date\GDT_Duration;
-use GDO\Date\Time;
-use GDO\Form\GDT_Form;
-use GDO\Mail\GDT_Email;
-use GDO\Net\GDT_IP;
-use GDO\Net\GDT_Url;
-use GDO\UI\GDT_Bar;
-use GDO\UI\GDT_Button;
-use GDO\UI\GDT_Link;
-use GDO\UI\GDT_Page;
-use GDO\User\GDO_User;
+use GDO\
+{Core\Application, Core\GDO_Module, Core\GDT_Checkbox, Core\GDT_String, Core\GDT_UInt, Core\Module_Core, Date\GDT_DateTime, Date\GDT_Duration, Date\Time, Form\GDT_Form, Mail\GDT_Email, Net\GDT_IP, Net\GDT_Url, UI\GDT_Bar, UI\GDT_Button, UI\GDT_Link, UI\GDT_Page, User\GDO_User};
 
 /**
  * Registration module.
@@ -34,9 +18,9 @@ use GDO\User\GDO_User;
  * This module features Terms of Service and Privacy pages.
  * This module features TellUsAboutYou moderation. It is copied to about_me automagically.
  *
- * @TODO Guest to Member conversion.
+ * @TODO Guest to Member conversion, which already works but only when you are still authed as guest.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 3.0.0
  *
  * @author gizmore
@@ -88,7 +72,6 @@ class Module_Register extends GDO_Module
 	{
 		return [
 			GDT_Checkbox::make('captcha')->initial('1'),
-			GDT_Checkbox::make('guest_signup')->initial('1'),
 			GDT_Checkbox::make('email_activation')->initial('1'),
 			GDT_Duration::make('email_activation_timeout')->initial('2h')->min(0)->max(31536000),
 			GDT_Checkbox::make('admin_activation')->initial('0'),
@@ -120,7 +103,7 @@ class Module_Register extends GDO_Module
 		}
 	}
 
-	public function cfgRightBar() { return $this->getConfigValue('hook_sidebar'); }
+	public function cfgRightBar(): bool { return $this->getConfigValue('hook_sidebar'); }
 
 	public function getUserConfig(): array
 	{
@@ -141,7 +124,7 @@ class Module_Register extends GDO_Module
 
 	public function cfgAdminActivationTest() { return $this->getConfigValue('admin_activation_test'); }
 
-	public function cfgMaxUsersPerIP()
+	public function cfgMaxUsersPerIP(): int
 	{
 		if (!$this->cfgSignupIP())
 		{
@@ -154,11 +137,11 @@ class Module_Register extends GDO_Module
 
 	public function cfgSignupIP() { return $this->getConfigValue('signup_ip'); }
 
-	public function cfgMaxUsersPerIPTimeout() { return $this->getConfigValue('ip_signup_duration'); }
+	public function cfgMaxUsersPerIPTimeout(): float|int { return $this->getConfigValue('ip_signup_duration'); }
 
-	public function cfgTermsOfService() { return $this->getConfigValue('force_tos'); }
+	public function cfgTermsOfService(): bool { return $this->getConfigValue('force_tos'); }
 
-	public function cfgTosUrl() { return $this->getConfigVar('tos_url'); }
+	public function cfgTosUrl(): ?string { return $this->getConfigVar('tos_url'); }
 
 	public function cfgPrivacyUrl(): string { return $this->getConfigVar('privacy_url'); }
 
@@ -169,21 +152,21 @@ class Module_Register extends GDO_Module
 			module_enabled('Login');
 	}
 
-	public function cfgPasswordRetype() { return $this->getConfigValue('signup_password_retype'); }
+	public function cfgPasswordRetype(): bool { return $this->getConfigValue('signup_password_retype'); }
 
-	public function cfgMailSender() { return $this->getConfigVar('signup_mail_sender'); }
+	public function cfgMailSender(): ?string { return $this->getConfigVar('signup_mail_sender'); }
 
 	############
 	### Init ###
 	############
 
-	public function cfgMailSenderName() { return $this->getConfigVar('signup_mail_sender_name'); }
+	public function cfgMailSenderName(): ?string { return $this->getConfigVar('signup_mail_sender_name'); }
 
 	##################
 	### Admin tabs ###
 	##################
 
-	public function renderAdminBar()
+	public function renderAdminBar(): void
 	{
 		if (Application::instance()->isHTML())
 		{
@@ -205,9 +188,12 @@ class Module_Register extends GDO_Module
 		}
 	}
 
-	public function cfgGuestSignup() { return $this->getConfigValue('guest_signup') && Module_Core::instance()->cfgAllowGuests(); }
+	public function cfgGuestSignup(): bool
+	{
+		return Module_Core::instance()->cfgAllowGuests() && module_enabled('Login');
+	}
 
-	public function hookRegisterForm(GDT_Form $form)
+	public function hookRegisterForm(GDT_Form $form): void
 	{
 		if ($this->cfgGuestSignup())
 		{
@@ -215,7 +201,7 @@ class Module_Register extends GDO_Module
 		}
 	}
 
-	public function hookGuestForm(GDT_Form $form)
+	public function hookGuestForm(GDT_Form $form): void
 	{
 		$form->actions()->addField(GDT_Button::make('link_register')->secondary()->href(href('Register', 'Form')));
 	}

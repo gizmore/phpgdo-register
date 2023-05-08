@@ -65,5 +65,5 @@ return [
 	'msg_admin_will_activate_you' => 'An email has been sent tothe administrators with a copy for you. As soon as you have been activated, you will receive another email.',
 	'register_date' => 'Register Date',
 	'mt_register_activations' => 'Pending Activations',
-	'activation_speed' => 'Aktivierungsdauer',
+	'activation_speed' => 'Activation challenge time',
 ];

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Register\Test;
 
 use GDO\Core\Module_Core;
@@ -29,6 +30,7 @@ final class RegisterTest extends TestCase
 		$this->userGhost();
 
 		# Config for easy registration
+		Module_Core::instance()->saveConfigVar('allow_guests', '0');
 		$module = Module_Register::instance();
 		$module->saveConfigValue('signup_password_retype', false);
 		$module->saveConfigValue('email_activation', false);
@@ -43,42 +45,48 @@ final class RegisterTest extends TestCase
 		$m = GDT_MethodTest::make()->method($method)->inputs($parameters);
 		$m->execute('submit');
 		$this->assert200('Check if registration works');
-		assertNotEmpty(GDO_User::getByName('Peter3'), 'Check if new user Peter3 can sign up.');
+		self::assertEquals(1, GDO_User::table()->countWhere('user_name="Peter3"'), 'Check if Peter3 got registered.');
 	}
 
-	public function testGuest()
+	public function testGuestFailure(): void
 	{
+		Module_Core::instance()->saveConfigVar('allow_guests', '0');
+		$method = Guest::make();
+		$parameters = [
+			'user_guest_name' => 'Casper',
+		];
+		$m = GDT_MethodTest::make()->method($method)->inputs($parameters);
+		$m->execute('submit');
+		$this->assert403('Check if guests cannot signup');
+		self::assertEquals(0, GDO_User::table()->countWhere('user_guest_name="Casper"'), 'Check if Casper got not registered.');
+	}
+
+	public function testGuestSuccess(): void
+	{
+		if (!module_enabled('Login'))
+		{
+			\gdo_test::instance()->verboseMessage('Cannot test register guest, because module login is not enabled.');
+			$this->assert200('Should not see me');
+			return;
+		}
+
 		# Another attempt which will not work.
 		$this->userGhost();
-
 		$module = Module_Register::instance();
 		$module->saveConfigValue('force_tos', false);
+		Module_Core::instance()->saveConfigVar('allow_guests', '1');
 		$method = Guest::make();
 		$parameters = ['user_guest_name' => 'Casper'];
 		$m = GDT_MethodTest::make()->method($method)->inputs($parameters);
 		$m->execute('submit');
-		Module_Core::instance()->saveConfigVar('allow_guests', '0');
-		if (!Module_Register::instance()->cfgGuestSignup())
-		{
-			$this->assert403('Check if guests cannot signup');
-		}
-		else
-		{
-			$this->assert200('Check if guest registration works.');
-
-			$user = GDO_User::current();
-			assertEquals('Casper', $user->getGuestName(), 'Check if guest register was success.');
-
-			$user = Module_Core::instance()->cfgSystemUser();
-			assertEquals('system', $user->getType(), 'Check if system user is still there.');
-		}
+		$this->assert200('Check if guest registration works.');
+		self::assertEquals(1, GDO_User::table()->countWhere('user_guest_name="Casper"'), 'Check if Casper got registered.');
 	}
 
 	public function testTOSFailed()
 	{
 		# Another attempt which will not work.
 		$this->userGhost();
-
 		$module = Module_Register::instance();
 		$module->saveConfigValue('force_tos', true);
 		$method = Form::make();

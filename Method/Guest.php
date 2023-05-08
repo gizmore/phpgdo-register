@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Register\Method;
 
 use GDO\Captcha\GDT_Captcha;
@@ -24,8 +25,8 @@ use GDO\Util\Common;
  * - Validate Mass signup via IP
  * - Validate TOS checkbox
  *
- * @TODO: Implement guest upgrade.
- * @version 6.11.0
+ * @TODO: Implement guest upgrade. Isn't that in activation module? Oo
+ * @version 7.0.3
  * @since 6.0.0
  * @author gizmore
  * @see Form
@@ -37,12 +38,12 @@ class Guest extends MethodForm
 
 	public function getUserType(): ?string { return 'guest,ghost'; }
 
-	public function isEnabled(): string
+	public function isEnabled(): bool
 	{
 		return Module_Register::instance()->cfgGuestSignup();
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$module = Module_Register::instance();
 		$signup = Form::make();

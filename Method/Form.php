@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Register\Method;
 
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\Application;
 use GDO\Core\GDO;
-use GDO\Core\GDO_Error;
+use GDO\Core\GDO_Exception;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Hook;
@@ -34,7 +35,7 @@ use GDO\User\GDT_Username;
 /**
  * Registration form.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 3.0.0
  * @author gizmore
  */
@@ -45,7 +46,7 @@ class Form extends MethodForm
 
 	public function getUserType(): ?string { return 'ghost,guest'; }
 
-	public function validatePasswordRetype(GDT_Form $form, GDT $field)
+	public function validatePasswordRetype(GDT_Form $form, GDT $field): bool
 	{
 		if ($field->getVar() !== $form->getField('user_password')->getVar())
 		{
@@ -54,7 +55,7 @@ class Form extends MethodForm
 		return true;
 	}
 
-	public function validateUniqueIP(GDT_Form $form, GDT $field)
+	public function validateUniqueIP(GDT_Form $form, GDT $field): bool
 	{
 		$ip = GDO::quoteS(GDT_IP::current());
 		$cut = Application::$TIME - Module_Register::instance()->cfgMaxUsersPerIPTimeout();
@@ -67,7 +68,7 @@ class Form extends MethodForm
 
 	public function validateUniqueUsername(GDT_Form $form, GDT_Username $username, $value): bool
 	{
-		$existing = GDO_User::table()->getByName($value);
+		$existing = GDO_User::getByName($value);
 		return $existing ? $username->error('err_username_taken') : true;
 	}
 
@@ -87,12 +88,12 @@ class Form extends MethodForm
 		return ($count == 0) || $email->error('err_email_taken');
 	}
 
-	public function validateTOS(GDT_Form $form, GDT_Checkbox $field)
+	public function validateTOS(GDT_Form $form, GDT_Checkbox $field): bool
 	{
 		return $field->getValue() || $field->error('err_tos_not_checked');
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$module = Module_Register::instance();
 
@@ -139,7 +140,6 @@ class Form extends MethodForm
 
 
 
-
 	public function formInvalid(GDT_Form $form): GDT
 	{
 		return GDT_Tuple::makeWith(
@@ -147,6 +147,9 @@ class Form extends MethodForm
 			$this->renderPage());
 	}
 
+	/**
+	 * @throws GDO_Exception
+	 */
 	public function formValidated(GDT_Form $form): GDT
 	{
 		return $this->onRegister($form);
@@ -155,10 +158,7 @@ class Form extends MethodForm
 	################
 	### Register ###
 	################
-	/**
-	 * @throws GDO_Error
-	 */
-	public function onRegister(GDT_Form $form)
+	public function onRegister(GDT_Form $form): GDT
 	{
 		$module = Module_Register::instance();
 
@@ -166,7 +166,7 @@ class Form extends MethodForm
 		$password = $form->getField('user_password');
 		$password->var(BCrypt::create($password->getVar())->__toString());
 
-		$activation = GDO_UserActivation::table()->blank($form->getFormVars());
+		$activation = GDO_UserActivation::blank($form->getFormVars());
 		$activation->setVar('user_register_ip', GDT_IP::current());
 		GDT_Hook::callHook('OnRegister', $form, $activation);
 		$activation->save();
