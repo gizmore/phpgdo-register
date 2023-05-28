@@ -88,6 +88,7 @@ class Module_Register extends GDO_Module
 			GDT_Email::make('signup_mail_sender')->initial(GDO_BOT_EMAIL),
 			GDT_String::make('signup_mail_sender_name')->icon('email')->initial(GDO_BOT_NAME),
 			GDT_Checkbox::make('hook_sidebar')->initial('1'),
+			GDT_Checkbox::make('guest_signup')->initial('1'),
 		];
 	}
 
