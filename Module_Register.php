@@ -111,7 +111,7 @@ class Module_Register extends GDO_Module
 		return [
 			GDT_IP::make('register_ip')->noacl(),
 			GDT_DateTime::make('register_date'),
-			GDT_Duration::make('activation_speed'),
+			GDT_Duration::make('activation_speed')->label('activation_speed'),
 		];
 	}
 
