@@ -48,6 +48,8 @@ class Guest extends MethodForm
 		$module = Module_Register::instance();
 		$signup = Form::make();
 
+        $form->text('info_guest_signup');
+
 		$form->addField(GDT_Username::make('user_guest_name')->notNull());
 		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_guest_name', [$this, 'validateGuestNameTaken']));
 		$form->addField(GDT_Validator::make()->validatorFor($form, 'user_guest_name', [$signup, 'validateUniqueIP']));

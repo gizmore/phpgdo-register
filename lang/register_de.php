@@ -66,4 +66,6 @@ return [
 	'register_date' => 'Registriert am',
 	'mt_register_activations' => 'Wartende Aktivierungen',
 	'activation_speed' => 'Aktivierungsdauer',
+    'info_guest_signup' => 'Mit einem Gastkonto können Sie für eine Sitzungszeit die meisten Funktionen dieser Webseite verwenden. Eine E-Mail oder ein Passwort werden nicht benötigt.',
+
 ];

@@ -66,4 +66,5 @@ return [
 	'register_date' => 'Register Date',
 	'mt_register_activations' => 'Pending Activations',
 	'activation_speed' => 'Activation challenge time',
+    'info_guest_signup' => 'A guest account allows you to use most of the features of this website for one session. An email or password is not required.',
 ];

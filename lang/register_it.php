@@ -65,5 +65,6 @@ return [
 	'register_date' => 'Registriert am',
 	'mt_register_activations' => 'Attivazioni in sospeso',
 	'activation_speed' => 'Aktivierungsdauer',
+    'info_guest_signup' => 'Un account ospite ti consente di utilizzare la maggior parte delle funzionalità di questo sito Web per una sessione. Non è richiesta un\'e-mail o una password.',
 
 ];
