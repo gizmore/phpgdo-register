@@ -27,7 +27,6 @@ return [
 	'msg_activation_mail_sent' => 'We have sent you an email. To complete your sign up process please follow the instructions there.',
 	'msg_activated' => 'Welcome, %s, your account is now activated.',
 	'msg_already_activated' => 'Your account was already activated.',
-	'err_username_taken' => 'This username is already in use.',
 	'err_email_taken' => 'This email is already resgistered here.',
 	'err_register' => 'The sign up process failed.',
 	'err_no_activation' => 'Activating your account failed.',

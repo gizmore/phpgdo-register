@@ -26,7 +26,6 @@ return [
 	'msg_activation_mail_sent' => 'Vi é stata inviata una Mail. Segua il Link di attivazione per concludere la registrazione.',
 	'msg_activated' => 'Benvenuta/o %s, Il conto é stato attivato.',
 	'msg_already_activated' => 'Il conto era gia attivato.',
-	'err_username_taken' => 'Questo utente é gia assengnato ad un altro utente.',
 	'err_email_taken' => 'Questa MAil é gia assegnata ad un altro utente.',
 	'err_register' => 'Durante le registrazione sono sorti ulteriori errori.',
 	'err_no_activation' => 'L´attivazione é fallita!',
