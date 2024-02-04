@@ -14,6 +14,7 @@ use GDO\Core\GDT_Template;
 use GDO\Core\GDT_Tuple;
 use GDO\Crypto\BCrypt;
 use GDO\Crypto\GDT_Password;
+use GDO\Crypto\GDT_PasswordHash;
 use GDO\Date\Time;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
@@ -164,11 +165,11 @@ class Form extends MethodForm
 
 		# TODO: GDT_Password should know it comes from form for a save...
 		$password = $form->getField('user_password');
+        /** @var GDT_PasswordHash $password */
 		$password->var(BCrypt::create($password->getVar())->__toString());
-
 		$activation = GDO_UserActivation::blank($form->getFormVars());
 		$activation->setVar('user_register_ip', GDT_IP::current());
-        $activation->setVar('user_password', $password->getVar());
+        $activation->setVar('user_password', $password->var);
 		GDT_Hook::callHook('OnRegister', $form, $activation);
 		$activation->save();
 
