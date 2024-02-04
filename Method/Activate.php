@@ -2,6 +2,7 @@
 namespace GDO\Register\Method;
 
 use GDO\Core\GDO;
+use GDO\Core\GDO_DBException;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Hook;
@@ -10,9 +11,11 @@ use GDO\Core\GDT_Response;
 use GDO\Core\GDT_String;
 use GDO\Core\GDT_Template;
 use GDO\Core\Method;
+use GDO\Crypto\BCrypt;
 use GDO\Date\Time;
 use GDO\Language\Trans;
 use GDO\Login\Method\Form;
+use GDO\Login\Module_Login;
 use GDO\Mail\Mail;
 use GDO\Register\GDO_UserActivation;
 use GDO\Register\Module_Register;
@@ -149,14 +152,15 @@ class Activate extends Method
 		return $body;
 	}
 
-	/**
-	 * Optionally turn current user into member for instant and mail.
-	 * Do not for admin moderation.
-	 *
-	 * @param GDO_UserActivation $activation
-	 *
-	 * @return GDO_User
-	 */
+    /**
+     * Optionally turn current user into member for instant and mail.
+     * Do not for admin moderation.
+     *
+     * @param GDO_UserActivation $activation
+     *
+     * @return GDO_User
+     * @throws GDO_DBException
+     */
 	public function activateToken(GDO_UserActivation $activation, $convertGuest = false)
 	{
 		if ($convertGuest)
@@ -169,13 +173,11 @@ class Activate extends Method
 			$user = GDO_User::blank($activation->getGDOVars());
 		}
 
-		$activation->saveVar('user_password', null);
-		$activation->markDeleted();
+        $user->setVar('user_type', 'member');
+        $user->save();
 
-		$user->setVar('user_type', 'member');
-		$user->save();
-
-		GDT_Hook::callWithIPC('UserActivated', $user, $activation);
+        GDT_Hook::callWithIPC('UserActivated', $user, $activation);
+        $activation->markDeleted();
 
 		return $user;
 	}
