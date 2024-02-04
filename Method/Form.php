@@ -5,6 +5,7 @@ namespace GDO\Register\Method;
 use GDO\Captcha\GDT_Captcha;
 use GDO\Core\Application;
 use GDO\Core\GDO;
+use GDO\Core\GDO_DBException;
 use GDO\Core\GDO_Exception;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
@@ -159,17 +160,20 @@ class Form extends MethodForm
 	################
 	### Register ###
 	################
-	public function onRegister(GDT_Form $form): GDT
+    /**
+     * @throws GDO_DBException
+     */
+    public function onRegister(GDT_Form $form): GDT
 	{
 		$module = Module_Register::instance();
 
 		# TODO: GDT_Password should know it comes from form for a save...
 		$password = $form->getField('user_password');
         /** @var GDT_PasswordHash $password */
-		$password->var(BCrypt::create($password->getVar())->__toString());
+        $hash = BCrypt::create($password->getVar())->__toString();
 		$activation = GDO_UserActivation::blank($form->getFormVars());
 		$activation->setVar('user_register_ip', GDT_IP::current());
-        $activation->setVar('user_password', $password->var);
+        $activation->setVar('user_password', $hash);
 		GDT_Hook::callHook('OnRegister', $form, $activation);
 		$activation->save();
 
