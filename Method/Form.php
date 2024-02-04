@@ -168,6 +168,7 @@ class Form extends MethodForm
 
 		$activation = GDO_UserActivation::blank($form->getFormVars());
 		$activation->setVar('user_register_ip', GDT_IP::current());
+        $activation->setVar('user_password', $password->getVar());
 		GDT_Hook::callHook('OnRegister', $form, $activation);
 		$activation->save();
 
