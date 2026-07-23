@@ -114,14 +114,10 @@ class Form extends MethodForm
 			$form->addField(GDT_Password::make('password_retype')->notNull()->label('password_retype'));
 			$form->addField(GDT_Validator::make('valid_password_retype')->validatorFor($form, 'password_retype', [$this, 'validatePasswordRetype']));
 		}
-		if ($module->cfgEmailActivation() || $module->cfgAdminActivation())
-		{
-			$form->addField(GDT_Email::make('user_email')->notNull());
-			$form->addField(GDT_Validator::make('valid_user_email')->validatorFor($form, 'user_email', [$this, 'validateUniqueEmail']));
-		}
 
-// 		if (!Application::instance()->isCLI())
-// 		{
+        $form->addField(GDT_Email::make('user_email')->notNull());
+        $form->addField(GDT_Validator::make('valid_user_email')->validatorFor($form, 'user_email', [$this, 'validateUniqueEmail']));
+
 		if ($module->cfgTermsOfService())
 		{
 			$form->addField(GDT_Checkbox::make('tos')->notNull()->label('tos_label', [$module->cfgTosUrl(), $module->cfgPrivacyURL()]));
@@ -131,7 +127,6 @@ class Form extends MethodForm
 		{
 			$form->addField(GDT_Captcha::make('captcha'));
 		}
-// 		}
 
 		$form->addField(GDT_AntiCSRF::make());
 
