@@ -176,6 +176,13 @@ class Activate extends Method
         $user->setVar('user_type', 'member');
         $user->save();
 
+		// user_password and user_email live on the activation record while a
+		// registration is pending. Persist them as the regular Login/Mail user
+		// settings once the account becomes a member, otherwise the immediate
+		// session works but every later login fails.
+		$user->saveSettingVar('Login', 'password', $activation->getPasswordHash());
+		$user->saveSettingVar('Mail', 'email', $activation->getEmail());
+
         GDT_Hook::callWithIPC('UserActivated', $user, $activation);
         $activation->markDeleted();
 
