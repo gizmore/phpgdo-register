@@ -10,6 +10,7 @@ return [
 	'cfg_admin_activation' => 'Admins müssen neue Mitglieder aktivieren?',
 	'cfg_signup_ip' => 'Register-IP speichern?',
 	'cfg_ip_signup_count' => 'Maximale Registrierungen per IP',
+	'cfg_local_ip_signup_count' => 'Maximale Registrierungen aus lokalen Netzen',
 	'cfg_ip_signup_duration' => 'Verbleibende Zeit für Aktivierung',
 	'cfg_force_tos' => 'Erzwinge das Lesen der AGB',
 	'cfg_tos_url' => 'AGB Link URL',
